@@ -20,12 +20,6 @@ type server struct {
 	ser.UnimplementedGetEnvVarServer
 }
 
-// SayHello implements helloworld.GreeterServer
-//func (s *server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
-//	log.Printf("Received: %v", in.GetName())
-//	return &pb.HelloReply{Message: "Hello " + in.GetName()}, nil
-//}
-
 func (s *server) GetEnvVar(ctx context.Context, envVar *ser.WhichEnvVar) (*ser.EnvVar, error) {
 	log.Printf("Received: %s", envVar.WhichEnvVar)
 	return &ser.EnvVar{EnvVar: os.Getenv(envVar.WhichEnvVar)}, nil
