@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option go_package = "./implementation";
+
+package implementation;
+
+// Interface exported by the server.
+service GetEnvVar {
+  // A simple RPC.
+  //
+  // Obtains the feature at a given position.
+  //
+  // A feature with an empty name is returned if there's no feature at the given
+  // position.
+  rpc GetEnvVar(whichEnvVar) returns (envVar) {}
+
+}
+
+message whichEnvVar{
+  string whichEnvVar = 1;
+}
+
+
+message envVar {
+  string envVar = 1;
+}
