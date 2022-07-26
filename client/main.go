@@ -35,9 +35,9 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 	//r, err := c.SayHello(ctx, &pb.HelloRequest{Name: *name})
-	r, err := c.GetEnvVar(ctx, &ser.WhichEnvVar{WhichEnvVar: "BASH_VERSION"})
+	r, err := c.GetEnvVar(ctx, &ser.WhichEnvVar{WhichEnvVar: "GOPATH"})
 	if err != nil {
 		log.Fatalf("could not greet: %v", err)
 	}
-	log.Printf("Greeting: %s", r.GetEnvVar())
+	log.Printf("The Env Var is: %s", r.GetEnvVar())
 }
