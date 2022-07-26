@@ -12,7 +12,7 @@ then to run the server from the same directory type:
 go run server/main.go 
 ```
 
-and to run the client again from the same directory:
+and to run the client again from the same directory but different terminal:
 
 ```azure
     go run client/main.go -name="GOPATH"
