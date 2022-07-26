@@ -4,12 +4,11 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	ser "github.com/gkyriazis-ionos/SimpleApplication/implementation"
+	"google.golang.org/grpc"
 	"log"
 	"net"
 	"os"
-
-	"google.golang.org/grpc"
-	pb "google.golang.org/grpc/examples/helloworld/helloworld"
 )
 
 var (
@@ -18,7 +17,7 @@ var (
 
 // server is used to implement helloworld.GreeterServer.
 type server struct {
-	pb.UnimplementedGreeterServer
+	ser.UnimplementedGetEnvVarServer
 }
 
 // SayHello implements helloworld.GreeterServer
@@ -27,9 +26,9 @@ type server struct {
 //	return &pb.HelloReply{Message: "Hello " + in.GetName()}, nil
 //}
 
-func (s *server) GetEnvVar(ctx context.Context, in string) (string, error) {
-	log.Printf("Received: %s", in)
-	return os.Getenv(in), nil
+func (s *server) GetEnvVar(ctx context.Context, envVar *ser.WhichEnvVar) (*ser.EnvVar, error) {
+	log.Printf("Received: %s", envVar.WhichEnvVar)
+	return &ser.EnvVar{EnvVar: os.Getenv(envVar.WhichEnvVar)}, nil
 }
 
 func main() {
@@ -39,7 +38,7 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	s := grpc.NewServer()
-	pb.RegisterGreeterServer(s, &server{})
+	ser.RegisterGetEnvVarServer(s, &server{})
 	log.Printf("server listening at %v", lis.Addr())
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)

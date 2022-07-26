@@ -6,10 +6,10 @@ import (
 	"log"
 	"time"
 
+	ser "github.com/gkyriazis-ionos/SimpleApplication/implementation"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
-	pb "google.golang.org/grpc/examples/helloworld/helloworld"
-	_ "simpleApplication/implementation/implementation"
+	//pb "google.golang.org/grpc/examples/helloworld/helloworld"
 )
 
 const (
@@ -30,14 +30,14 @@ func main() {
 	}
 	defer conn.Close()
 	//c := pb.NewGreeterClient(conn)
-	c :=
+	c := ser.NewGetEnvVarClient(conn)
 	// Contact the server and print out its response.
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
-	r, err := c.SayHello(ctx, &pb.HelloRequest{Name: *name})
-	//r, err := c.GetEnvVar(ctx, "FEATURE_TOGGLE")
+	//r, err := c.SayHello(ctx, &pb.HelloRequest{Name: *name})
+	r, err := c.GetEnvVar(ctx, &ser.WhichEnvVar{WhichEnvVar: "BASH_VERSION"})
 	if err != nil {
 		log.Fatalf("could not greet: %v", err)
 	}
-	log.Printf("Greeting: %s", r.GetMessage())
+	log.Printf("Greeting: %s", r.GetEnvVar())
 }
