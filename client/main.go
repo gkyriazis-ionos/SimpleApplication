@@ -35,7 +35,7 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 	//r, err := c.SayHello(ctx, &pb.HelloRequest{Name: *name})
-	r, err := c.GetEnvVar(ctx, &ser.WhichEnvVar{WhichEnvVar: "GOPATH"})
+	r, err := c.GetEnvVar(ctx, &ser.WhichEnvVar{WhichEnvVar: *name})
 	if err != nil {
 		log.Fatalf("could not greet: %v", err)
 	}
