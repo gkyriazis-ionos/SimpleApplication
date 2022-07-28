@@ -34,6 +34,7 @@ func main() {
 	s := grpc.NewServer()
 	ser.RegisterGetEnvVarServer(s, &server{})
 	log.Printf("server listening at %v", lis.Addr())
+	log.Printf("Backend 1")
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}
